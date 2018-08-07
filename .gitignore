@@ -1,0 +1,9 @@
+*.pyc
+*.csv
+db/
+sqlite_key.s
+test.py
+helper.py
+c.bat
+proxy.py
+find.py
