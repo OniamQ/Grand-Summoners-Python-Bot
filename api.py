@@ -23,10 +23,10 @@ class API(object):
 		self.s=requests.Session()
 		self.s.headers.update({'Content-Type':'application/x-www-form-urlencoded','Connection':'keep-alive','User-Agent':'B_megamistrike/53 CFNetwork/808.2.16 Darwin/16.3.0','Accept-Language':'en-gb','Accept-Encoding':'gzip, deflate'})
 		self.s.verify=False
-		self.app_hash='c3cff24218c4d3b7153499beea32cc23'
-		self.app_version=9
-		self.master_version=126
-		self.resource_version=58
+		self.app_hash='5f487dc2427b3b369757cb587656c806'
+		self.app_version=29
+		self.master_version=365
+		self.resource_version=169
 		self.key='ZFlyUU0ycFJaTVlFRkVoaA=='
 		self.useNewKey=False
 		self.device_id=None
