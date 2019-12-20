@@ -132,7 +132,7 @@ class API(object):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"dungeon_id":dungeon_id,"food_id":0,"map_id":map_id,"master_version":self.master_version,"party":{},"platform_type":self.platform_type,"quest_id":quest_id,"resource_version":self.resource_version,"supporter_id":"0","user_tool_id":0,"user_unique_id":""})
 
 	def register_email(self,mail,password):
-		return self.callAPI({"app_hash":"c3cff24218c4d3b7153499beea32cc23","app_version":9,"email":mail,"master_version":self.master_version,"password":password,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
+		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"email":mail,"master_version":self.master_version,"password":password,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
 	def scenario_end(self,played_scenario_id,tutorial_is_end=0,tutorial_step=0,tutorial_type=0):#done
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"played_scenario_id":played_scenario_id,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
