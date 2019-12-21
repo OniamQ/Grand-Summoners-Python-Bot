@@ -21,12 +21,13 @@ class API(object):
 		self.crypter=Crypter()
 		self.base='https://g-api.grandsummoners.com/app/'
 		self.s=requests.Session()
-		self.s.headers.update({'Content-Type':'application/x-www-form-urlencoded','Connection':'keep-alive','User-Agent':'B_megamistrike/53 CFNetwork/808.2.16 Darwin/16.3.0','Accept-Language':'en-gb','Accept-Encoding':'gzip, deflate'})
+		self.s.headers.update({'Content-Type':'application/x-www-form-urlencoded','Connection':'keep-alive','User-Agent':'Grand%20Summoners/145 CFNetwork/808.2.16 Darwin/16.3.0','Accept-Language':'en-gb','Accept-Encoding':'gzip, deflate'})
 		self.s.verify=False
-		self.app_hash='5f487dc2427b3b369757cb587656c806'
-		self.app_version=29
+		self.app_hash='c8fb64652fcdfb325012c09f7efea208'
+		self.app_version=31
 		self.master_version=365
 		self.resource_version=169
+		self.scenario_master_version=89
 		self.key='ZFlyUU0ycFJaTVlFRkVoaA=='
 		self.useNewKey=False
 		self.device_id=None
@@ -45,54 +46,54 @@ class API(object):
 		if id in units.data:
 			return units.data[id]['name']
 		self.log('%s missing'%(id))
-		return 'missing'
+		return None
 
 	def getUnitRarity(self,id):
 		id=str(id)
 		if id in units.data:
 			return units.data[id]['rarity']
 		self.log('%s missing'%(id))
-		return 'missing'
+		return None
 
 	def getEquipName(self,id):
 		id=str(id)
 		if id in item_master.data:
 			return item_master.data[id]['name']
 		self.log('%s missing'%(id))
-		return 'missing'
+		return None
 
 	def getEquipRarity(self,id):
 		id=str(id)
 		if id in item_master.data:
 			return item_master.data[id]['rarity']
 		self.log('%s missing'%(id))
-		return 'missing'
+		return None
 
 	def setNextKey(self,key):
 		self.key=base64.b64encode(key)
 
-	def challenge_end(self,challenge_id):#done
+	def challenge_end(self,challenge_id):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"challenge_id":challenge_id,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def challenge_top(self):#done
+	def challenge_top(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def eventshop_page(self,event_id):#done
+	def eventshop_page(self,event_id):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"event_id":event_id,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def gacha_do(self,button_no,gacha_id):#done
+	def gacha_do(self,button_no,gacha_id):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"button_no":button_no,"gacha_id":gacha_id,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def gacha_top(self):#done
+	def gacha_top(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def game_init(self):#done
-		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"encryption_key":"dYrQM2pRZMYEFEhh\\ZgAEi{I[?ZToT@G","master_version":0,"platform_type":self.platform_type,"resource_version":0})
+	def game_init(self):
+		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"encryption_key":"dYrQM2pRZMYEFEhh\\ZgAEi{I[?ZToT@G","master_version":0,"platform_type":self.platform_type,"resource_version":0,"scenario_master_version":0})
 
-	def home(self):#done
+	def home(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def login(self):#done
+	def login(self):
 		res=self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","device_id":"","device_token":"","is_agree":1,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 		self.useNewKey=True
 		return res
@@ -116,37 +117,43 @@ class API(object):
 			self.setDeviceId(id1)
 			return self.login()
 
-	def message_list_get(self,page):#done
+	def message_list_get(self,page):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"get_type":0,"master_version":self.master_version,"page":page,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def message_open(self,message_id_list):#done
+	def message_open(self,message_id_list):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"message_id_list":message_id_list,"page":1,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def party_update(self,user_party_list):#done
+	def party_update(self,user_party_list):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"party":{"main_no":0,"user_party_list":user_party_list},"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def quest_end(self,quest_end,tutorial_is_end=None,tutorial_step=None,tutorial_type=None):#done
+	def quest_end(self,quest_end,tutorial_is_end=None,tutorial_step=None,tutorial_type=None):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"is_ranking_view":False,"master_version":self.master_version,"platform_type":self.platform_type,"quest_end":quest_end,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
 
-	def quest_start(self,quest_id,dungeon_id=10100,map_id=10000):#done
+	def quest_start(self,quest_id,dungeon_id=10100,map_id=10000):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"dungeon_id":dungeon_id,"food_id":0,"map_id":map_id,"master_version":self.master_version,"party":{},"platform_type":self.platform_type,"quest_id":quest_id,"resource_version":self.resource_version,"supporter_id":"0","user_tool_id":0,"user_unique_id":""})
 
 	def register_email(self,mail,password):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"email":mail,"master_version":self.master_version,"password":password,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def scenario_end(self,played_scenario_id,tutorial_is_end=0,tutorial_step=0,tutorial_type=0):#done
+	def scenario_end(self,played_scenario_id,tutorial_is_end=0,tutorial_step=0,tutorial_type=0):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"played_scenario_id":played_scenario_id,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
 
-	def tutorial_unit_add(self,tutorial_step,tutorial_type,unit_no):#done
+	def tutorial_unit_add(self,tutorial_step,tutorial_type,unit_no):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"unit_no":unit_no,"user_unique_id":""})
 
-	def tutorial_update(self,tutorial_is_end,tutorial_step,tutorial_type):#done
+	def tutorial_update(self,tutorial_is_end,tutorial_step,tutorial_type):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
 
-	def user_create(self,nickname):#done
+	def user_create(self,nickname):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"nickname":nickname,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def version_get(self):#done
+	def tutorial_skip(self):
+		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
+
+	def tutorial_unit_add(self,unit_no=1):
+		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_step":12,"tutorial_type":1,"unit_no":unit_no,"user_unique_id":""})
+
+	def version_get(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":0,"platform_type":self.platform_type,"resource_version":0})
 
 	def decrypt(self,input):
@@ -160,10 +167,19 @@ class API(object):
 		
 	def callAPI(self,idata):
 		_caller=sys._getframe(1).f_code.co_name
+		if 'scenario_master_version' not in idata:
+			idata['scenario_master_version']=self.scenario_master_version
+		self.log('..%s()'%(_caller))
 		r=self.s.post(self.base+_caller,data=json.dumps({'body':self.encrypt(idata),'device_id':'' if not self.device_id else self.device_id,'session_id':'' if not self.session_id else self.session_id}))
+		if 'error_message' in r.content:
+			self.log('error_message:%s()'%(_caller))
+			return None
 		body=json.loads(r.content)['body']
 		if len(body)<=100:	return body
 		data= json.loads(self.decrypt(body))
+		if 'STATUS' in data and data['STATUS']!=100:
+			self.log('%s() status:%s'%(_caller,data['STATUS']))
+			return None
 		if 'encryption_key' in data:	self.setNextKey(data['encryption_key'])
 		if 'session_id' in data:
 			self.session_id=data['session_id']
@@ -175,6 +191,7 @@ class API(object):
 			if 'master_version' in data['result']:
 				self.master_version=data['result']['master_version']
 				self.resource_version=data['result']['resource_version']
+				self.scenario_master_version=data['result']['scenario_master_version']
 		return data
 		
 	def log(self,msg):
@@ -250,7 +267,9 @@ class API(object):
 		fourstar=0
 		for u in player_unit_list:
 			name=self.getUnitName(u['unit_id'])
+			if not name:	continue
 			rare=self.getUnitRarity(u['unit_id'])
+			if not rare:	continue
 			if rare<4:	continue
 			if rare>=4 and 'Chicken' not in name:	fourstar+=1
 			if u['unit_id'] not in units:
@@ -263,7 +282,9 @@ class API(object):
 		fourstare=0
 		for u in player_item_list:
 			name=self.getEquipName(u['item_id'])
+			if not name:	continue
 			rare=self.getEquipRarity(u['item_id'])
+			if not rare:	continue
 			if rare<4:	continue
 			if rare>=4:	fourstare+=1
 			if u['item_id'] not in equip:
@@ -283,47 +304,59 @@ class API(object):
 		else:
 			print fourstar
 		
-	def reroll(self):
-		self.game_init()
-		self.version_get()
-		self.user_create(self.genRandomHex(6))
-		self.login()
-		self.scenario_end(1000000,0,2,1)
-		res=self.doMission(10101,0,4,1)
-		self.scenario_end(1010190)
-		self.tutorial_update(0,5,1)
-		self.scenario_end(10020,0,6,1)
-		self.tutorial_update(0,7,1)
-		self.home()
-		player_unit_list=res['result']['player_update']['unit']['player_unit_list']
-		user_party_list=[{"leader_unit_id":player_unit_list[1]['id'],"no":0,"unit":[{"id":player_unit_list[1]['id'],"no":0},{"id":player_unit_list[0]['id'],"no":1},{"id":-1,"no":2},{"id":-1,"no":3}]}]
-		self.party_update(user_party_list)
-		self.scenario_end(1010201,0,7,1)
-		self.scenario_end(10041)
-		self.doMission(10102)
-		self.scenario_end(1010290)#17
-		self.scenario_end(10050,0,9,1)
-		self.scenario_end(10060,0,10,1)
-		self.scenario_end(10070)#20
-		self.doMission(10103)
-		self.scenario_end(1010301)
-		self.scenario_end(1010390)#25
-		self.tutorial_unit_add(12,1,2)
-		self.scenario_end(1010399,1,13,1)
-		self.gacha_top()
-		self.home()
-		self.gacha_do(3,10001)
-		self.gacha_do(3,20001)
-		self.getAllGifts()
-		self.eventshop_page(2008000)
-		self.scenario_end(201805301)
-		self.getAllChallenges()
-		#self.gacha_do(2,10017)
-		#self.gacha_do(2,10018)
-		#self.gacha_do(2,20006)
-		#self.gacha_do(2,20007)
-		self.home()
-		self.exportUnits()
+	def reroll(self,skipTut=False):
+		if skipTut:
+			self.game_init()
+			self.version_get()
+			self.user_create(self.genRandomHex(6))
+			if not self.login():	return
+			self.tutorial_skip()
+			self.tutorial_unit_add()
+			self.scenario_end(1010399,1,13,1)
+			self.home()
+			self.getAllGifts()
+			self.exportUnits()
+		else:
+			self.game_init()
+			self.version_get()
+			self.user_create(self.genRandomHex(6))
+			if not self.login():	return
+			self.scenario_end(1000000,0,2,1)
+			res=self.doMission(10101,0,4,1)
+			self.scenario_end(1010190)
+			self.tutorial_update(0,5,1)
+			self.scenario_end(10020,0,6,1)
+			self.tutorial_update(0,7,1)
+			self.home()
+			player_unit_list=res['result']['player_update']['unit']['player_unit_list']
+			user_party_list=[{"leader_unit_id":player_unit_list[1]['id'],"no":0,"unit":[{"id":player_unit_list[1]['id'],"no":0},{"id":player_unit_list[0]['id'],"no":1},{"id":-1,"no":2},{"id":-1,"no":3}]}]
+			self.party_update(user_party_list)
+			self.scenario_end(1010201,0,7,1)
+			self.scenario_end(10041)
+			self.doMission(10102)
+			self.scenario_end(1010290)#17
+			self.scenario_end(10050,0,9,1)
+			self.scenario_end(10060,0,10,1)
+			self.scenario_end(10070)#20
+			self.doMission(10103)
+			self.scenario_end(1010301)
+			self.scenario_end(1010390)#25
+			self.tutorial_unit_add(12,1,2)
+			self.scenario_end(1010399,1,13,1)
+			self.gacha_top()
+			self.home()
+			self.gacha_do(3,10001)
+			self.gacha_do(3,20001)
+			self.getAllGifts()
+			self.eventshop_page(2008000)
+			self.scenario_end(201805301)
+			self.getAllChallenges()
+			#self.gacha_do(2,10017)
+			#self.gacha_do(2,10018)
+			#self.gacha_do(2,20006)
+			#self.gacha_do(2,20007)
+			self.home()
+			self.exportUnits()
 
 if __name__ == "__main__":
 	a=API()

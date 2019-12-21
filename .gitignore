@@ -7,3 +7,4 @@ helper.py
 c.bat
 proxy.py
 find.py
+db/*
