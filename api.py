@@ -8,7 +8,7 @@ import time
 import struct
 import socket
 import random
-import units
+import unit_master
 import item_master
 import io
 from crypter import Crypter
@@ -43,15 +43,15 @@ class API(object):
 
 	def getUnitName(self,id):
 		id=str(id)
-		if id in units.data:
-			return units.data[id]['name']
+		if id in unit_master.data:
+			return unit_master.data[id]['name']
 		self.log('%s missing'%(id))
 		return None
 
 	def getUnitRarity(self,id):
 		id=str(id)
-		if id in units.data:
-			return units.data[id]['rarity']
+		if id in unit_master.data:
+			return unit_master.data[id]['rarity']
 		self.log('%s missing'%(id))
 		return None
 
@@ -138,9 +138,6 @@ class API(object):
 	def scenario_end(self,played_scenario_id,tutorial_is_end=0,tutorial_step=0,tutorial_type=0):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"played_scenario_id":played_scenario_id,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
 
-	def tutorial_unit_add(self,tutorial_step,tutorial_type,unit_no):
-		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"unit_no":unit_no,"user_unique_id":""})
-
 	def tutorial_update(self,tutorial_is_end,tutorial_step,tutorial_type):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_is_end":tutorial_is_end,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"user_unique_id":""})
 
@@ -150,8 +147,8 @@ class API(object):
 	def tutorial_skip(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"user_unique_id":""})
 
-	def tutorial_unit_add(self,unit_no=1):
-		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_step":12,"tutorial_type":1,"unit_no":unit_no,"user_unique_id":""})
+	def tutorial_unit_add(self,tutorial_step,tutorial_type,unit_no=1):
+		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"country_code":"","master_version":self.master_version,"platform_type":self.platform_type,"resource_version":self.resource_version,"tutorial_step":tutorial_step,"tutorial_type":tutorial_type,"unit_no":unit_no,"user_unique_id":""})
 
 	def version_get(self):
 		return self.callAPI({"app_hash":self.app_hash,"app_version":self.app_version,"master_version":0,"platform_type":self.platform_type,"resource_version":0})
@@ -270,7 +267,9 @@ class API(object):
 			if not name:	continue
 			rare=self.getUnitRarity(u['unit_id'])
 			if not rare:	continue
-			if rare<4:	continue
+			if rare<4:
+				self.log('unit:%s rare:%s'%(name,rare))
+				continue
 			if rare>=4 and 'Chicken' not in name:	fourstar+=1
 			if u['unit_id'] not in units:
 				units[u['unit_id']]={}
@@ -285,7 +284,9 @@ class API(object):
 			if not name:	continue
 			rare=self.getEquipRarity(u['item_id'])
 			if not rare:	continue
-			if rare<4:	continue
+			if rare<4:
+				self.log('equip:%s rare:%s'%(name,rare))
+				continue
 			if rare>=4:	fourstare+=1
 			if u['item_id'] not in equip:
 				equip[u['item_id']]={}
@@ -311,7 +312,7 @@ class API(object):
 			self.user_create(self.genRandomHex(6))
 			if not self.login():	return
 			self.tutorial_skip()
-			self.tutorial_unit_add()
+			self.tutorial_unit_add(12,1,2)
 			self.scenario_end(1010399,1,13,1)
 			self.home()
 			self.getAllGifts()
