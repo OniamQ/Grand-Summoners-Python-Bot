@@ -24,10 +24,10 @@ class API(object):
 		self.s.headers.update({'Content-Type':'application/x-www-form-urlencoded','Connection':'keep-alive','User-Agent':'Grand%20Summoners/145 CFNetwork/808.2.16 Darwin/16.3.0','Accept-Language':'en-gb','Accept-Encoding':'gzip, deflate'})
 		self.s.verify=False
 		self.app_hash='c8fb64652fcdfb325012c09f7efea208'
-		self.app_version=31
-		self.master_version=365
-		self.resource_version=169
-		self.scenario_master_version=89
+		self.app_version=33
+		self.master_version=438
+		self.resource_version=191
+		self.scenario_master_version=150
 		self.key='ZFlyUU0ycFJaTVlFRkVoaA=='
 		self.useNewKey=False
 		self.device_id=None
